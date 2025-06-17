@@ -1,0 +1,432 @@
+<!-- Rebuilt full HTML with all sections restored and slider included -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nikola Veinović Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Nunito Sans', sans-serif;
+      line-height: 1.6;
+      color: #222;
+    }
+    header {
+      background: #424242;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid #eee;
+    }
+    header img { height: 40px; }
+    nav a {
+      margin-left: 1rem;
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+    }
+    section {
+      padding: 4rem 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 2rem;
+    }
+    .hero img {
+      max-width: 300px;
+      width: 100%;
+      border-radius: 12px;
+    }
+    .hero > div {
+      flex: 1;
+    }
+    .cv-buttons {
+      display: flex;
+      align-items: center;
+      margin-top: 1rem;
+      gap: 10px;
+    }
+    .dropdown {
+      position: relative;
+    }
+    .cv-btn {
+      padding: 0.75rem 1.5rem;
+      background: #111;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      min-width: 160px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 4px;
+      z-index: 100;
+    }
+    .dropdown-content a {
+      display: block;
+      color: #424242;
+      padding: 8px 12px;
+      text-decoration: none;
+    }
+    .dropdown-content a:hover {
+      background-color: #efefef;
+    }
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+    .social-link {
+      text-decoration: none;
+    }
+    .social-link .fa-instagram {
+      font-size: 24px;
+      color: #424242;
+    }
+    .hero-description {
+      margin-top: 1rem;
+      font-style: italic;
+      color: #555;
+    }
+    .portfolio-toggle {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+      gap: 1rem;
+    }
+    .portfolio-toggle button {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      background: #ccc;
+    }
+    .portfolio-toggle button.active {
+      background: #111;
+      color: #fff;
+    }
+    .portfolio-slider {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      display: none;
+    }
+    .portfolio-slider.active {
+      display: block;
+    }
+    .slider-wrapper {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+    .portfolio-slide {
+      width: 100%;
+      flex-shrink: 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 2rem;
+      padding: 2rem 0;
+    }
+    .portfolio-slide img {
+      width: 300px;
+      height: auto;
+      border-radius: 8px;
+    }
+    .portfolio-text {
+      flex: 1;
+    }
+    .slider-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2rem;
+      background: none;
+      border: none;
+      color: #424242;
+      cursor: pointer;
+      z-index: 1;
+      opacity: 0.5;
+    }
+    .slider-arrow.left { left: 10px; }
+    .slider-arrow.right { right: 10px; }
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    form input, form textarea {
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    form button {
+      background: #111;
+      color: white;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+      color: #888;
+    }
+    @media (max-width: 600px) {
+      nav { display: none; }
+      header { flex-direction: column; }
+      .portfolio-slide {
+        flex-direction: column;
+        text-align: center;
+      }
+      .slider-wrapper {
+        flex-direction: column;
+      }
+    }
+
+    .portfolio-slider-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  gap: 10px; /* spacing between arrows and slider */
+}
+  
+  </style>
+<script>
+  const slidePositions = {
+    'game-slider': 0,
+    'modeling-slider': 0
+  };
+
+  function moveSlide(sliderId, direction) {
+    const slider = document.querySelector(`#${sliderId} .slider-wrapper`);
+    const slides = slider.querySelectorAll('.portfolio-slide');
+    const maxIndex = slides.length - 1;
+    slidePositions[sliderId] += direction;
+
+    if (slidePositions[sliderId] < 0) slidePositions[sliderId] = 0;
+    if (slidePositions[sliderId] > maxIndex) slidePositions[sliderId] = maxIndex;
+
+    const slideWidth = slides[0].offsetWidth;
+    slider.style.transform = `translateX(-${slidePositions[sliderId] * slideWidth}px)`;
+  }
+  window.switchPortfolio = function (type) {
+      // Hide all sliders and remove active from all buttons
+      document.querySelectorAll('.portfolio-slider').forEach(slider => {
+        slider.classList.remove('active');
+        // Reset scroll/position on switch if desired
+        const wrapper = slider.querySelector('.slider-wrapper');
+        if (wrapper) wrapper.style.transform = 'translateX(0)';
+      });
+
+      document.querySelectorAll('.portfolio-toggle button').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      // Activate selected slider and button
+      document.getElementById(`${type}-slider`).classList.add('active');
+      document.getElementById(`${type}-slider-btn`).classList.add('active');
+
+      // Reset position
+      slidePositions[`${type}-slider`] = 0;
+    };
+</script>
+
+</head>
+<script>
+  function sendEmail() {
+    const name = document.querySelector('input[name="name"]').value;
+    const email = document.querySelector('input[name="email"]').value;
+    const message = document.querySelector('textarea[name="message"]').value;
+
+    const subject = encodeURIComponent(`Contact from ${name}`);
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+
+    window.location.href = `mailto:your@email.com?subject=${subject}&body=${body}`;
+    return false; // prevent form submission
+  }
+</script>
+
+<body>
+  <header>
+    <img src="https://cdn.prod.website-files.com/67faf4c9f4590010d562d896/67faf5433af51c4fe95cfe4e_logo.png" alt="Logo" />
+    <nav>
+      <a href="#about">About</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <img src="https://cdn.prod.website-files.com/67faf4c9f4590010d562d896/680b6de7bc2f63aea9f9fb8f_Prava%20slika.png" alt="Nikola Veinović" />
+    <div>
+      <h1>Hello, I'm Nikola Veinović</h1>
+      <h3>Game developer & multimedia designer from Serbia.</h3>
+      <p class="hero-description">I specialize in 3D animation, modeling, and game development. Here you can see some of my projects.</p>
+      <div class="cv-buttons">
+        <div class="dropdown">
+          <button class="cv-btn">Download CV</button>
+          <div class="dropdown-content">
+            <a href="CV English.pdf" download>English</a>
+            <a href="CV Srpski.pdf" download>Serbian</a>
+          </div>
+        </div>
+        <a href="https://www.instagram.com/veinovic_/" class="social-link" target="_blank" aria-label="Instagram">
+          <i class="fa fa-instagram"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2>About Me</h2>
+    <p>I am a passionate and detail-oriented multimedia designer and game developer. I enjoy creating interactive experiences and experimenting with new tools and technologies. I'm a student at Metropolitan University and have participated in multiple game jams and competitions.</p>
+  </section>
+
+  <section id="portfolio">
+    <h2>Portfolio</h2>
+    <div class="portfolio-toggle">
+      <button id="game-slider-btn" class="active" onclick="switchPortfolio('game')">Game Development</button>
+      <button id="modeling-slider-btn" onclick="switchPortfolio('modeling')">3D Modeling</button>
+    </div>
+
+    <div class="portfolio-slider-wrapper">
+    <div id="game-slider" class="portfolio-slider active">
+      <button class="slider-arrow left" onclick="moveSlide('game-slider', -1)">&#10094;</button>
+      
+
+      <div class="slider-wrapper">
+        <div class="portfolio-slide">
+          <img src="Mars Escape.png" alt="Mars Escape">
+          <div class="portfolio-text">
+            <h3>Mars Escape</h3>
+            <p>Mars Escape was my first contact with game development – a 2D platformer created as a
+              demo project for the Introduction to Video Games course at university. In the game, the player
+              explores the surface of Mars, collecting coins and avoiding aliens that patrol the platforms and
+              can kill the player on contact.
+              The game was developed in Unity using the Bolt visual scripting tool, which was a requirement
+              for the course assignment. I created all the visual assets myself in Photoshop. I chose a pixel
+              art style because it allowed me to achieve a cohesive and appealing look, even without
+              advanced drawing skills.
+              I edited all sound effects in Audacity, tailoring them to match the visual style and overall
+              atmosphere of the game.
+              Mars Escape gave me a solid introduction to the game development process and laid the
+              foundation for future projects.</p>
+          </div>
+        </div>
+        <div class="portfolio-slide">
+          <img src="Way out.png" alt="Way Out">
+          <div class="portfolio-text">
+            <h3>Way Out</h3>
+            <p>Way Out is a 2D pixel art puzzle game with escape room elements, developed for university
+              using OpenGL. The game consists of three levels. In the first two, the player must find a key by
+              solving logical puzzles — like moving books, chess pieces, and interpreting hidden messages.
+              The third level presents another puzzle that must be solved in order to choose the correct door
+              and escape.
+              
+              All visual assets were created in Photoshop using a pixel art style, and sound effects were
+              edited in Audacity. The demo version of the game is completed and represents my take on
+              classic escape room mechanics within a 2D environment.</p>
+          </div>
+        </div>
+        <div class="portfolio-slide">
+          <img src="Exit.png" alt="Exit">
+          <div class="portfolio-text">
+            <h3>Exit</h3>
+            <p>Exit is a top-down RPG demo in which the player takes on the role of Petar Venčić – a man
+              who, after clinical death, wakes up buried in his own grave and manages to dig himself out. He
+              doesn’t know how he survived, but he knows he must find a way out of the eerie cemetery. As
+              he wanders through the graveyard, he soon realizes he is not alone – a group of cultists is there
+              to perform a ritual, and Petar becomes their target.
+              In order to survive and escape, Petar finds an improvised weapon and begins searching for the
+              key that unlocks the cemetery gate. His path leads him to a chapel, where he faces the most
+              dangerous confrontation with those who want him dead.
+              
+              The game features an intro sequence made up of images I drew, accompanied by typewriter-
+              style text, creating an atmospheric introduction to the story and hinting at the mysterious
+              
+              background of the events.
+              Exit was created as part of a university course, using Unity, Photoshop, Maya, and Audacity.</p>
+          </div>
+        </div>
+        <div class="portfolio-slide">
+          <img src=" Moon Defense.png" alt="Moon Defense">
+          <div class="portfolio-text">
+            <h3>Moon Defense - The Zarax Menace</h3>
+            <p>Moon Defense - The Zarax Menace is a 3D tower defense strategy set in the year 2300 on the
+              Moon, where the player takes on the role of a commander tasked with defending Luna Link,
+              the main communication tower between the Moon and Earth. Players must use their strategic
+              skills to defend the tower from mysterious alien ships known as Zarax.
+              Enemies emerge from tunnels and move using the AI algorithm, making each wave increasingly
+              challenging. As the rounds progress, more enemies appear, and an additional challenge comes
+              from the UFO, which randomly spawns new enemies at different points along the path.
+              Since the game was developed for a university project, the focus was on allowing the player to
+              interact with the environment (placing, removing, and upgrading objects...). In addition to these
+              and basic mechanics, artificial intelligence elements were implemented, including the AI
+              algorithm for enemy navigation, state machine systems for their behavior, and additional AI
+              logic that adds complexity and dynamism to the game.
+              The game was developed using Unity, Maya, Photoshop, and Audacity.</p>
+          </div>
+        </div>
+      </div>
+      <button class="slider-arrow right" onclick="moveSlide('game-slider', 1)">&#10095;</button>
+    </div>
+    </div>
+
+    <div class="portfolio-slider-wrapper">
+    <div id="modeling-slider" class="portfolio-slider">
+      <button class="slider-arrow left" onclick="moveSlide('game-slider', -1)">&#10094;</button>
+      <button class="slider-arrow right" onclick="moveSlide('game-slider', 1)">&#10095;</button>
+      <div class="slider-wrapper">
+        <div class="portfolio-slide">
+          <img src="Ika.png" alt="Ika Animation">
+          <div class="portfolio-text">
+            <h3>Ika</h3>
+            <p>This animation was created as part of a university project and represents my first major work in
+              3D animation. It follows a scientist named Ika, who is excited about a portal he has built. He
+              rides his hoverboard around the dining table, waves, then heads through the hallway into the
+              garage, where he accidentally falls over the railing. After getting back up, he jumps into the
+              portal and disappears.
+              The animation was originally imagined as a backstory for a game I was planning to develop.
+              While working on it, I discovered how passionate I am about animation. This project marked the
+              moment I realized I wanted to focus more seriously on animation and modeling. I created the
+              entire project myself - from modeling and environment design to animation and rendering.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <form onsubmit="return sendEmail();">
+      <input type="text" name="name" placeholder="Your Name" required />
+      <input type="email" name="email" placeholder="Your Email" required />
+      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Email</button>
+    </form>
+  </section>
+
+  <footer>
+    &copy; 2025 Nikola Veinović. All rights reserved.
+  </footer>
+</body>
+</html>
