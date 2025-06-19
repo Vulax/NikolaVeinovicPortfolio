@@ -412,15 +412,32 @@
     </div>
   </section>
 
-  <section id="contact">
-    <h2>Contact</h2>
-    <form onsubmit="return sendEmail();">
-      <input type="text" name="name" placeholder="Your Name" required />
-      <input type="email" name="email" placeholder="Your Email" required />
-      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-      <button type="submit">Send Email</button>
-    </form>
-  </section>
+ <section id="contact">
+  <h2>Contact</h2>
+  <form onsubmit="return sendEmail();">
+    <input type="text" id="name" placeholder="Your Name" required />
+    <input type="email" id="email" placeholder="Your Email" required />
+    <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
+    <button type="submit">Send Email</button>
+  </form>
+</section>
+<script>
+  function sendEmail() {
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const message = document.getElementById("message").value.trim();
+
+    const subject = encodeURIComponent("New Message from " + name);
+    const body = encodeURIComponent(
+      `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
+    );
+
+    const mailtoLink = `mailto:nveinovic02@gmail.com?subject=${subject}&body=${body}`;
+
+    window.location.href = mailtoLink;
+    return false; // Prevent actual form submission
+  }
+</script>
 
   <footer>
     &copy; 2025 Nikola Veinović. All rights reserved.
