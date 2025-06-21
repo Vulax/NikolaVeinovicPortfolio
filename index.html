@@ -95,6 +95,7 @@
     .social-link .fa-instagram {
       font-size: 24px;
       color: #424242;
+      margin-top: 5px;
     }
     .hero-description {
       margin-top: 1rem;
@@ -203,7 +204,19 @@
   width: 100%;
   gap: 10px; /* spacing between arrows and slider */
 }
-  
+.project-name {  
+  margin-bottom:1.5%;
+}
+
+.portfolio-slide video {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+  object-fit: cover;
+}
+
+
   </style>
 <script>
   const slidePositions = {
@@ -299,8 +312,8 @@
   <section id="portfolio">
     <h2>Portfolio</h2>
     <div class="portfolio-toggle">
-      <button id="game-slider-btn" class="active" onclick="switchPortfolio('game')">Game Development</button>
-      <button id="modeling-slider-btn" onclick="switchPortfolio('modeling')">3D Modeling</button>
+      <button id="game-slider-btn" class="active" onclick="switchPortfolio('game')">Game Dev</button>
+      <button id="modeling-slider-btn" onclick="switchPortfolio('modeling')">3D Artist</button>
     </div>
 
     <div class="portfolio-slider-wrapper">
@@ -310,9 +323,12 @@
 
       <div class="slider-wrapper">
         <div class="portfolio-slide">
-          <img src="Mars Escape.png" alt="Mars Escape">
+            <video autoplay muted loop playsinline>
+            <source src="mars_escape.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
           <div class="portfolio-text">
-            <h3>Mars Escape</h3>
+            <h3 class="project-name">Mars Escape</h3>
             <p>Mars Escape was my first contact with game development – a 2D platformer created as a
               demo project for the Introduction to Video Games course at university. In the game, the player
               explores the surface of Mars, collecting coins and avoiding aliens that patrol the platforms and
@@ -328,9 +344,12 @@
           </div>
         </div>
         <div class="portfolio-slide">
-          <img src="Way out.png" alt="Way Out">
+          <video autoplay muted loop playsinline>
+            <source src="way_out.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
           <div class="portfolio-text">
-            <h3>Way Out</h3>
+            <h3 class="project-name">Way Out</h3>
             <p>Way Out is a 2D pixel art puzzle game with escape room elements, developed for university
               using OpenGL. The game consists of three levels. In the first two, the player must find a key by
               solving logical puzzles — like moving books, chess pieces, and interpreting hidden messages.
@@ -343,9 +362,12 @@
           </div>
         </div>
         <div class="portfolio-slide">
-          <img src="Exit.png" alt="Exit">
+           <video autoplay muted loop playsinline>
+            <source src="exit.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
           <div class="portfolio-text">
-            <h3>Exit</h3>
+            <h3 class="project-name">Exit</h3>
             <p>Exit is a top-down RPG demo in which the player takes on the role of Petar Venčić – a man
               who, after clinical death, wakes up buried in his own grave and manages to dig himself out. He
               doesn’t know how he survived, but he knows he must find a way out of the eerie cemetery. As
@@ -363,9 +385,12 @@
           </div>
         </div>
         <div class="portfolio-slide">
-          <img src=" Moon Defense.png" alt="Moon Defense">
+           <video autoplay muted loop playsinline>
+            <source src="moon_defense.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
           <div class="portfolio-text">
-            <h3>Moon Defense - The Zarax Menace</h3>
+            <h3 class="project-name">Moon Defense - The Zarax Menace</h3>
             <p>Moon Defense - The Zarax Menace is a 3D tower defense strategy set in the year 2300 on the
               Moon, where the player takes on the role of a commander tasked with defending Luna Link,
               the main communication tower between the Moon and Earth. Players must use their strategic
@@ -392,9 +417,12 @@
       <button class="slider-arrow right" onclick="moveSlide('game-slider', 1)">&#10095;</button>
       <div class="slider-wrapper">
         <div class="portfolio-slide">
-          <img src="Ika.png" alt="Ika Animation">
+           <video autoplay muted loop playsinline>
+            <source src="Ika - animation.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
           <div class="portfolio-text">
-            <h3>Ika</h3>
+            <h3 class="project-name">Ika</h3>
             <p>This animation was created as part of a university project and represents my first major work in
               3D animation. It follows a scientist named Ika, who is excited about a portal he has built. He
               rides his hoverboard around the dining table, waves, then heads through the hallway into the
