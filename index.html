@@ -1386,32 +1386,41 @@ function toggleReadMore(button) {
     mouse.y = e.clientY;
   });
 
-  function draw() {
-    ctx.clearRect(0, 0, width, height);
-    
-    ctx.strokeStyle = "rgba(255,255,255,0.08)";
-    ctx.lineWidth = 1;
+  
 
-    lines.forEach(line => {
-      const dx = line.x - mouse.x;
-      const dy = line.y - mouse.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      const parallax = Math.min(100 / dist, 2);
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const isDark = document.body.classList.contains("dark-mode");
+  ctx.lineWidth = 1.2;
+  ctx.strokeStyle = isDark ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.07)";
 
-      const angle = line.angle + parallax;
-      const x2 = line.x + Math.cos(angle) * line.length;
-      const y2 = line.y + Math.sin(angle) * line.length;
+  const lineCount = 10;
+  const pointCount = 60;
+  const waveHeight = 20;
+  const waveSpeed = 0.002;
 
-      ctx.beginPath();
-      ctx.moveTo(line.x, line.y);
-      ctx.lineTo(x2, y2);
-      ctx.stroke();
+  for (let i = 0; i < lineCount; i++) {
+    const baseY = (canvas.height / (lineCount + 1)) * (i + 1);
+    ctx.beginPath();
 
-      line.angle += 0.001 * line.speed;
-    });
+    for (let j = 0; j < pointCount; j++) {
+      const x = (canvas.width - 1) * j / (pointCount - 1);
+      const y = baseY + Math.sin(t * waveSpeed + j * 0.3 + i) * waveHeight + (cursor.y - 0.5) * 40;
+      if (j === 0) {
+        ctx.moveTo(x, y);
+      } else {
+        ctx.lineTo(x, y);
+      }
+    }
 
-    requestAnimationFrame(draw);
+    ctx.stroke();
   }
+
+  t++;
+  requestAnimationFrame(draw);
+}
+
+
 
   draw();
 
@@ -1466,35 +1475,40 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   let t = 0;
-  function draw() {
-    ctx.clearRect(0, 0, width, height);
-    
-    const isDark = document.body.classList.contains("dark-mode");
-    ctx.lineWidth = 1.4;
+let cursor = { x: 0.5, y: 0.5 };
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const isDark = document.body.classList.contains("dark-mode");
+  ctx.lineWidth = 1.2;
+  ctx.strokeStyle = isDark ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.07)";
 
-    lines.forEach(points => {
-      ctx.beginPath();
-      for (let i = 0; i < points.length; i++) {
-        const p = points[i];
-        const wave = Math.sin(t * 0.002 + p.offset) * 15;
-        const y = p.baseY + wave;
-        if (i === 0) {
-          ctx.moveTo(p.x, y);
-        } else {
-          const prev = points[i - 1];
-          const cx = (prev.x + p.x) / 2;
-          const cy = (prev.baseY + y) / 2;
-          ctx.quadraticCurveTo(prev.x, prev.baseY + Math.sin(t * 0.002 + prev.offset) * 15, cx, cy);
-        }
+  const lineCount = 10;
+  const pointCount = 60;
+  const waveHeight = 20;
+  const waveSpeed = 0.002;
+
+  for (let i = 0; i < lineCount; i++) {
+    const baseY = (canvas.height / (lineCount + 1)) * (i + 1);
+    ctx.beginPath();
+
+    for (let j = 0; j < pointCount; j++) {
+      const x = (canvas.width - 1) * j / (pointCount - 1);
+      const y = baseY + Math.sin(t * waveSpeed + j * 0.3 + i) * waveHeight + (cursor.y - 0.5) * 40;
+      if (j === 0) {
+        ctx.moveTo(x, y);
+      } else {
+        ctx.lineTo(x, y);
       }
+    }
 
-      ctx.strokeStyle = isDark ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.08)";
-      ctx.stroke();
-    });
-
-    t++;
-    requestAnimationFrame(draw);
+    ctx.stroke();
   }
+
+  t++;
+  requestAnimationFrame(draw);
+}
+
+
 
   draw();
 
