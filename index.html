@@ -353,6 +353,284 @@
   }
 }
 
+
+.skill-box {
+  border: 2px solid black;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  border-radius: 5px;
+  background-color: #f7f7f7;
+}
+.skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 1rem;
+}
+.left-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+@media (max-width: 768px) {
+  .portfolio-slide {
+    flex-direction: column;
+  }
+  .portfolio-text {
+    padding: 1rem 0;
+  }
+}
+
+/* Sexy gradient buttons */
+.read-toggle {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  color: white;
+  box-shadow: 0 4px 12px rgba(255, 65, 108, 0.4);
+  transition: all 0.3s ease-in-out;
+}
+.read-toggle:hover {
+  background: linear-gradient(135deg, #ff4b2b, #ff416c);
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(255, 75, 43, 0.5);
+}
+
+/* Align title with top of video */
+.portfolio-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+  text-align: left;
+  height: 100%;
+}
+
+.project-name {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  align-self: flex-start;
+}
+
+/* Match header color for main button */
+.read-toggle {
+  background: linear-gradient(135deg, #424242, #2e2e2e);
+  box-shadow: 0 4px 12px rgba(66, 66, 66, 0.4);
+}
+.read-toggle:hover {
+  background: linear-gradient(135deg, #2e2e2e, #424242);
+  box-shadow: 0 6px 20px rgba(66, 66, 66, 0.5);
+}
+
+/* Sexy skill-box buttons */
+.skill-box {
+  border: none;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #424242, #2e2e2e);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(66, 66, 66, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+.skill-box:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(66, 66, 66, 0.6);
+}
+
+/* Designer frame around iframe */
+.left-content iframe {
+  border: 3px solid #424242;
+  border-radius: 12px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Ensure text starts directly below the title and fills height */
+.portfolio-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+/* Optional tweak for smoother layout */
+.portfolio-description {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Let text expand and push button to bottom */
+.portfolio-description {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.portfolio-description p {
+  flex-grow: 1;
+  margin-bottom: 1rem;
+}
+
+/* Ensure portfolio-slide fills consistent height */
+.portfolio-slide {
+  align-items: stretch;
+}
+
+/* Make text block use available space and button stay at bottom */
+.portfolio-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.portfolio-description {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.portfolio-description p {
+  flex-grow: 1;
+  margin-bottom: 1rem;
+}
+
+/* Enforce minimum height for slide and make text area stretch */
+.portfolio-slide {
+  min-height: 360px;
+  align-items: stretch;
+}
+
+.portfolio-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.portfolio-description {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.portfolio-description p {
+  flex-grow: 1;
+  margin: 0;
+}
+
+/* Remove top padding from text section and align title to top */
+.portfolio-text {
+  padding-top: 0 !important;
+  justify-content: space-between;
+}
+
+.project-name {
+  margin-top: 0;
+  padding-top: 0;
+  line-height: 1.2;
+}
+
+/* Scrollable blur mask overlay */
+.portfolio-description {
+  position: relative;
+  overflow: hidden;
+  max-height: 300px;
+}
+
+.portfolio-description p {
+  overflow-y: auto;
+  padding-right: 1rem;
+  max-height: 100%;
+}
+
+.portfolio-description::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, white);
+  pointer-events: none;
+}
+
+/* Clean scroll-only version without blur overlay */
+.portfolio-description::after {
+  display: none;
+}
+
+.portfolio-description {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.portfolio-description p {
+  overflow-y: auto;
+  max-height: 100%;
+  padding-right: 1rem;
+}
+
+.portfolio-text {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.portfolio-description {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 1rem;
+}
+
+.portfolio-description p {
+  height: 100%;
+  overflow-y: auto;
+  margin: 0;
+  padding-right: 0.5rem;
+}
+
+.portfolio-slide {
+  align-items: stretch;
+  height: 400px;
+}
+
+.portfolio-text {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.portfolio-description {
+  flex-grow: 1;
+  height: 100%;
+  overflow-y: auto;
+  padding-right: 1rem;
+}
+
+.portfolio-description p {
+  height: 100%;
+  overflow-y: auto;
+  margin: 0;
+  padding-right: 0.5rem;
+}
 </style>
 <script>
   const slidePositions = {
@@ -393,6 +671,42 @@
       slidePositions[`${type}-slider`] = 0;
     };
 </script>
+<style>
+  #portfolio h2::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 4px;
+    margin-top: 10px;
+    background: #424242;
+    border-radius: 2px;
+    position: absolute;
+    left: 0;
+  }
+</style>
+<style>
+      #about h2::after {
+        content: "";
+        display: block;
+        width: 60px;
+        height: 4px;
+        margin-top: 10px;
+        background: #424242;
+        border-radius: 2px;
+        position: absolute;
+        left: 0;
+      }
+      #about p {
+        font-size: 1.1rem;
+        line-height: 1.9;
+        color: #333;
+        background: #f9f9f9;
+        padding: 1.5rem 2rem;
+        border-left: 5px solid #424242;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      }
+    </style>
 </head>
 <script>
   function sendEmail() {
@@ -437,11 +751,11 @@
 </div>
 </section>
 <section id="about">
-<h2>About Me</h2>
-<p>I am a passionate and detail-oriented multimedia designer and game developer. I enjoy creating interactive experiences and experimenting with new tools and technologies. I'm a student at Metropolitan University and have participated in multiple game jams and competitions.</p>
+<h2 style="font-size: 2.6rem;font-weight: 900;text-align: left;margin-bottom: 1.5rem;text-transform: uppercase;color: #222;position: relative;padding-bottom: 0.5rem;letter-spacing: 0.5px;">About Me</h2>
+<p>I am currently in my fourth year of studying Game Development at Metropolitan University.<br/>Although my program is primarily focused on programming, I fell in love with Maya in my<br/>first year, and in my third year, through an animation course, I realized that this is the field I<br/>want to pursue.<br/><br/>I am highly creative and enjoy exploring new ideas. Almost every day I get a new<br/>inspiration, and as time goes by, I’m focusing more on animation and modeling.<br/><br/>I’m currently working on my portfolio and looking for an internship to further advance by<br/>learning from others.<br/><br/>In my free time, I enjoy playing social and video games, watching movies and TV shows, and<br/>going out to parties.</p>
 </section>
 <section id="portfolio">
-<h2>Portfolio</h2>
+<h2 style="font-size: 2.8rem;font-weight: 900;text-align: left;margin-bottom: 2rem;text-transform: uppercase;background: none;color: #222;position: relative;padding-bottom: 0.5rem;letter-spacing: 0.5px;">Portfolio</h2>
 <div class="portfolio-toggle">
 <button class="active" id="game-slider-btn" onclick="switchPortfolio('game')">Game Dev</button>
 <button id="modeling-slider-btn" onclick="switchPortfolio('modeling')">3D Artist</button>
@@ -450,63 +764,34 @@
 <div class="portfolio-slider active" id="game-slider">
 <button class="slider-arrow left" onclick="moveSlide('game-slider', -1)" style="left: 0;">❮</button>
 <div class="slider-wrapper">
-<div class="portfolio-slide">
-<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="315" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/EQ4SlKFYTSM?controls=1&modestbranding=1&rel=0" style="max-width:480px;" title="YouTube video player" width="560"></iframe>
-<div class="portfolio-text">
-<h3 class="project-name">Mars Escape</h3>
-
-<div class="portfolio-description">
-  <p>Mars Escape was my first contact with game development – a 2D platformer created as a
-              demo project for the Introduction to Video Games course at university. In the game, the player
-              explores the surface of Mars, collecting.<span class="more-text" style="display: none;"> ins and avoiding aliens that patrol the platforms and        can kill the player on contact.        The game was developed in Unity using the Bolt visual scripting tool, which was a requirement        for the course assignment. I created all the visual assets myself in Photoshop. I chose a pixel        art style because it allowed me to achieve a cohesive and appealing look, even without        advanced drawing skills.        I edited all sound effects in Audacity, tailoring them to match the visual style and overall        atmosphere of the game.        Mars Escape gave me a solid introduction to the game development process and laid the        foundation for future projects.</span></p>
-  <div style="text-align:center; margin-top:10px;">
-    <button class="read-toggle" onclick="toggleReadMore(this)">Read more</button>
-  </div>
-</div>
-</div>
-</div>
-<div class="portfolio-slide">
-<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="315" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/fEhewogkyfs?controls=1&modestbranding=1&rel=0" style="max-width:480px;" title="YouTube video player" width="560"></iframe>
+<div class="portfolio-slide"><div class="left-content"><iframe allowfullscreen="" frameborder="0" src="https://www.youtube.com/embed/EQ4SlKFYTSM?controls=1&amp;modestbranding=1&amp;rel=0" style="width: 100%; aspect-ratio: 16/9; border-radius: 8px;" title="Mars Escape video"></iframe><div class="skills-grid"><div class="skill-box">Unity</div><div class="skill-box">Bolt</div><div class="skill-box">Photoshop</div><div class="skill-box">Audacity</div><div class="skill-box">Pixel Art</div><div class="skill-box">Level Design</div></div></div><div class="portfolio-text"><h3 class="project-name">Mars Escape</h3><div class="portfolio-description"><p>Mars Escape was my first contact with game development – a 2D platformer created as a demo project for the Introduction to Video Games course at university. In the game, the player explores the surface of Mars, collecting coins and avoiding aliens that patrol the platforms and can kill the player on contact.<br/><br/>The game was developed in Unity using the Bolt visual scripting tool, which was a requirement for the course assignment. I created all the visual assets myself in Photoshop. I chose a pixel art style because it allowed me to achieve a cohesive and appealing look, even without advanced drawing skills.<br/><br/>I edited all sound effects in Audacity, tailoring them to match the visual style and overall atmosphere of the game.<br/><br/>Mars Escape gave me a solid introduction to the game development process and laid the foundation for future projects.</p><div style="text-align:center; margin-top:10px;"></div></div></div></div>
+<div class="portfolio-slide"><div class="left-content"><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="315" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/fEhewogkyfs?controls=1&amp;modestbranding=1&amp;rel=0" style="max-width:480px;" title="YouTube video player" width="560"></iframe><div class="skills-grid"><div class="skill-box">OpenGL</div><div class="skill-box">C++</div><div class="skill-box">Puzzle Design</div><div class="skill-box">Photoshop</div><div class="skill-box">Audacity</div></div></div>
 <div class="portfolio-text">
 <h3 class="project-name">Way Out</h3>
-
 <div class="portfolio-description">
-  <p>Way Out is a 2D pixel art puzzle game with escape room elements, developed for university
-              using OpenGL. The game consists of three levels. In the first two, the player must find a key by
-              solving logical puzzles — like.<span class="more-text" style="display: none;"> ving books, chess pieces, and interpreting hidden messages.        The third level presents another puzzle that must be solved in order to choose the correct door        and escape.               All visual assets were created in Photoshop using a pixel art style, and sound effects were        edited in Audacity. The demo version of the game is completed and represents my take on        classic escape room mechanics within a 2D environment.</span></p>
-  <div style="text-align:center; margin-top:10px;">
-    <button class="read-toggle" onclick="toggleReadMore(this)">Read more</button>
-  </div>
+<p>Way Out is a 2D pixel art puzzle game with escape room elements, developed for university using OpenGL. The game consists of three levels. In the first two, the player must find a key by solving logical puzzles — like moving books, chess pieces, and interpreting hidden messages. The third level presents another puzzle that must be solved in order to choose the correct door and escape.<br/><br/>All visual assets were created in Photoshop using a pixel art style, and sound effects were edited in Audacity. The demo version of the game is completed and represents my take on classic escape room mechanics within a 2D environment.</p>
+<div style="text-align:center; margin-top:10px;">
 </div>
 </div>
 </div>
-<div class="portfolio-slide">
-<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="315" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/r1uhyLyiDx4?controls=1&modestbranding=1&rel=0" style="max-width:480px;" title="YouTube video player" width="560"></iframe>
+</div>
+<div class="portfolio-slide"><div class="left-content"><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="315" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/r1uhyLyiDx4?controls=1&amp;modestbranding=1&amp;rel=0" style="max-width:480px;" title="YouTube video player" width="560"></iframe><div class="skills-grid"><div class="skill-box">Unity</div><div class="skill-box">Photoshop</div><div class="skill-box">Maya</div><div class="skill-box">Audacity</div><div class="skill-box">Story Design</div></div></div>
 <div class="portfolio-text">
 <h3 class="project-name">Exit</h3>
-
 <div class="portfolio-description">
-  <p>Exit is a top-down RPG demo in which the player takes on the role of Petar Venčić – a man
-              who, after clinical death, wakes up buried in his own grave and manages to dig himself out. He
-              doesn’t know how he survived, but he.<span class="more-text" style="display: none;"> ows he must find a way out of the eerie cemetery. As        he wanders through the graveyard, he soon realizes he is not alone – a group of cultists is there        to perform a ritual, and Petar becomes their target.        In order to survive and escape, Petar finds an improvised weapon and begins searching for the        key that unlocks the cemetery gate. His path leads him to a chapel, where he faces the most        dangerous confrontation with those who want him dead.               The game features an intro sequence made up of images I drew, accompanied by typewriter-        style text, creating an atmospheric introduction to the story and hinting at the mysterious               background of the events.        Exit was created as part of a university course, using Unity, Photoshop, Maya, and Audacity.</span></p>
-  <div style="text-align:center; margin-top:10px;">
-    <button class="read-toggle" onclick="toggleReadMore(this)">Read more</button>
-  </div>
+<p>Exit is a top-down RPG demo in which the player takes on the role of Petar Venčić – a man who, after clinical death, wakes up buried in his own grave and manages to dig himself out. He doesn’t know how he survived, but he knows he must find a way out of the eerie cemetery. As he wanders through the graveyard, he soon realizes he is not alone – a group of cultists is there to perform a ritual, and Petar becomes their target.<br/><br/>In order to survive and escape, Petar finds an improvised weapon and begins searching for the key that unlocks the cemetery gate. His path leads him to a chapel, where he faces the most dangerous confrontation with those who want him dead.<br/><br/>The game features an intro sequence made up of images I drew, accompanied by typewriter-style text, creating an atmospheric introduction to the story and hinting at the mysterious background of the events.<br/><br/>Exit was created as part of a university course, using Unity, Photoshop, Maya, and Audacity.</p>
+<div style="text-align:center; margin-top:10px;">
 </div>
 </div>
 </div>
-<div class="portfolio-slide">
-<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="315" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/sx8Vl0dXy60?controls=1&modestbranding=1&rel=0" style="max-width:480px;" title="YouTube video player" width="560"></iframe>
+</div>
+<div class="portfolio-slide"><div class="left-content"><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="315" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/sx8Vl0dXy60?controls=1&amp;modestbranding=1&amp;rel=0" style="max-width:480px;" title="YouTube video player" width="560"></iframe><div class="skills-grid"><div class="skill-box">Unity</div><div class="skill-box">AI Logic</div><div class="skill-box">Tower Defense</div><div class="skill-box">Photoshop</div><div class="skill-box">Maya</div><div class="skill-box">Audacity</div></div></div>
 <div class="portfolio-text">
 <h3 class="project-name">Moon Defense - The Zarax Menace</h3>
-
 <div class="portfolio-description">
-  <p>Moon Defense - The Zarax Menace is a 3D tower defense strategy set in the year 2300 on the
-              Moon, where the player takes on the role of a commander tasked with defending Luna Link,
-              the main communication tower between the.<span class="more-text" style="display: none;"> on and Earth. Players must use their strategic        skills to defend the tower from mysterious alien ships known as Zarax.        Enemies emerge from tunnels and move using the AI algorithm, making each wave increasingly        challenging. As the rounds progress, more enemies appear, and an additional challenge comes        from the UFO, which randomly spawns new enemies at different points along the path.        Since the game was developed for a university project, the focus was on allowing the player to        interact with the environment (placing, removing, and upgrading objects...). In addition to these        and basic mechanics, artificial intelligence elements were implemented, including the AI        algorithm for enemy navigation, state machine systems for their behavior, and additional AI        logic that adds complexity and dynamism to the game.        The game was developed using Unity, Maya, Photoshop, and Audacity.</span></p>
-  <div style="text-align:center; margin-top:10px;">
-    <button class="read-toggle" onclick="toggleReadMore(this)">Read more</button>
-  </div>
+<p>Moon Defense - The Zarax Menace is a 3D tower defense strategy set in the year 2300 on the Moon, where the player takes on the role of a commander tasked with defending Luna Link, the main communication tower between the Moon and Earth. Players must use their strategic skills to defend the tower from mysterious alien ships known as Zarax.<br/><br/>Enemies emerge from tunnels and move using the A* algorithm, making each wave increasingly challenging. As the rounds progress, more enemies appear, and an additional challenge comes from the UFO, which randomly spawns new enemies at different points along the path.<br/><br/>Since the game was developed for a university project, the focus was on allowing the player to interact with the environment (placing, removing, and upgrading objects...). In addition to these and basic mechanics, artificial intelligence elements were implemented, including the A* algorithm for enemy navigation, state machine systems for their behavior, and additional AI logic that adds complexity and dynamism to the game.<br/><br/>The game was developed using Unity, Maya, Photoshop, and Audacity.</p>
+<div style="text-align:center; margin-top:10px;">
+</div>
 </div>
 </div>
 </div>
@@ -519,18 +804,13 @@
 <button class="slider-arrow left" onclick="moveSlide('game-slider', -1)" style="left: 0;">❮</button>
 <button class="slider-arrow right" onclick="moveSlide('game-slider', 1)">❯</button>
 <div class="slider-wrapper">
-<div class="portfolio-slide">
-<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="315" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/gxtalk2ru8c?controls=1&modestbranding=1&rel=0" style="max-width:480px;" title="YouTube video player" width="560"></iframe>
+<div class="portfolio-slide"><div class="left-content"><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="315" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/gxtalk2ru8c?controls=1&amp;modestbranding=1&amp;rel=0" style="max-width:480px;" title="YouTube video player" width="560"></iframe><div class="skills-grid"><div class="skill-box">3D Modeling</div><div class="skill-box">Maya</div><div class="skill-box">Animation</div><div class="skill-box">Rendering</div><div class="skill-box">Storyboarding</div></div></div>
 <div class="portfolio-text">
 <h3 class="project-name">Ika</h3>
-
 <div class="portfolio-description">
-  <p>This animation was created as part of a university project and represents my first major work in
-              3D animation. It follows a scientist named Ika, who is excited about a portal he has built. He
-              rides his hoverboard around.<span class="more-text" style="display: none;"> e dining table, waves, then heads through the hallway into the        garage, where he accidentally falls over the railing. After getting back up, he jumps into the        portal and disappears.        The animation was originally imagined as a backstory for a game I was planning to develop.        While working on it, I discovered how passionate I am about animation. This project marked the        moment I realized I wanted to focus more seriously on animation and modeling. I created the        entire project myself - from modeling and environment design to animation and rendering.</span></p>
-  <div style="text-align:center; margin-top:10px;">
-    <button class="read-toggle" onclick="toggleReadMore(this)">Read more</button>
-  </div>
+<p>This animation was created as part of a university project and represents my first major work in 3D animation. It follows a scientist named Ika, who is excited about a portal he has built. He rides his hoverboard around the dining table, waves, then heads through the hallway into the garage, where he accidentally falls over the railing. After getting back up, he jumps into the portal and disappears.<br/><br/>The animation was originally imagined as a backstory for a game I was planning to develop. While working on it, I discovered how passionate I am about animation. This project marked the moment I realized I wanted to focus more seriously on animation and modeling. I created the entire project myself - from modeling and environment design to animation and rendering.</p>
+<div style="text-align:center; margin-top:10px;">
+</div>
 </div>
 </div>
 </div>
@@ -567,7 +847,6 @@
 <footer>
     © 2025 Nikola Veinović. All rights reserved.
   </footer>
-
 <div class="modal" id="readMoreModal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; overflow:auto; background-color:rgba(0,0,0,0.6);">
 <div class="modal-content" style="background-color:#fff; margin:10% auto; padding:20px; border:1px solid #888; width:80%; max-width:700px; border-radius:8px;">
 <span class="close" onclick="document.getElementById('readMoreModal').style.display='none'" style="color:#aaa; float:right; font-size:28px; font-weight:bold; cursor:pointer;">×</span>
@@ -592,8 +871,6 @@ function toggleReadMore(button) {
   }
 }
 </script>
-
-
 <script>
 function toggleReadMore(button) {
   const span = button.parentElement.previousElementSibling.querySelector('.more-text');
@@ -606,6 +883,5 @@ function toggleReadMore(button) {
   }
 }
 </script>
-
 </body>
 </html>
