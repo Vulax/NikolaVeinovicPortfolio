@@ -17,6 +17,10 @@
     right: -3px !important;
   }
 }
+    html, button {
+  -webkit-tap-highlight-color: transparent; /* Safari & Android */
+  outline: none;                              /* ukloni plavi outline nakon tap-a */
+}
     .portfolio-slide iframe {
       width: 100%;
       max-width: 100%;
@@ -165,6 +169,7 @@
       justify-content: center;
       margin-bottom: 2rem;
       gap: 1rem;
+      color: #333;
     }
 
     .portfolio-toggle button {
@@ -174,6 +179,7 @@
       cursor: pointer;
       font-weight: bold;
       background: #ccc;
+      color: #333;
     }
 
     .portfolio-toggle button.active {
@@ -1212,18 +1218,6 @@
       z-index: -1;
       pointer-events: none;
 
-    }
-
-    .cursor {
-      position: fixed;
-      width: 20px;
-      height: 20px;
-      border: 2px solid white;
-      border-radius: 50%;
-      pointer-events: none;
-      transform: translate(-50%, -50%);
-      transition: transform 0.1s ease-out;
-      z-index: 9999;
     }
 
     .cursor.hover {
