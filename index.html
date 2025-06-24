@@ -18,8 +18,8 @@
   }
 }
     html, button {
-  -webkit-tap-highlight-color: transparent; /* Safari & Android */
-  outline: none;                              /* ukloni plavi outline nakon tap-a */
+  -webkit-tap-highlight-color: transparent; 
+  outline: none;                             
 }
     .portfolio-slide iframe {
       width: 100%;
@@ -766,7 +766,28 @@
         object-fit: contain !important;
       }
     }
-  </style>
+  
+.header-right {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .header-right {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .nav-links {
+    display: none;
+  }
+}
+
+</style>
   <script>
     const slidePositions = {
       'game-slider': 0,
@@ -1225,10 +1246,7 @@
       background-color: rgba(255, 255, 255, 0.1);
     }
 
-    a,
-    button {
-      cursor: none;
-    }
+    
   </style>
   <style>
     ::-webkit-scrollbar {
@@ -1333,15 +1351,19 @@
   <header>
     <img alt="Logo" src="https://cdn.prod.website-files.com/67faf4c9f4590010d562d896/67faf5433af51c4fe95cfe4e_logo.png"
       style="height:60px;" />
-    <nav>
-      <a href="#about">About</a>
-      <a href="#portfolio">Portfolio</a>
-      <a href="#contact">Contact</a>
-      <label class="switch">
-        <input id="darkSwitch" onclick="toggleDarkModeSwitch(this)" type="checkbox" />
-        <span class="slider-toggle"></span>
-      </label>
-    </nav>
+    
+<div class="header-right">
+  <nav class="nav-links">
+    <a href="#about">About</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <label class="switch desktop-switch">
+    <input id="darkSwitch" onclick="toggleDarkModeSwitch(this)" type="checkbox" />
+    <span class="slider-toggle"></span>
+  </label>
+</div>
+
   </header>
   <section class="hero fade-in-section">
     <img alt="Nikola Veinović"
