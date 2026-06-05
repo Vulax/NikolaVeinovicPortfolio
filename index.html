@@ -373,7 +373,7 @@
       aspect-ratio: 16/9;
       border: none;
       display: block;
-      height: 100%;
+      height:100%;
     }
     .detail-media .media-gallery {
       display: grid;
@@ -385,6 +385,7 @@
       aspect-ratio: 16/9;
       object-fit: cover;
       display: block;
+      height:100%;
     }
     .detail-media .media-gallery img:first-child:last-child {
       grid-column: 1/-1;
@@ -523,7 +524,41 @@
     @media (max-width: 480px) {
       .cards-grid { grid-template-columns: 1fr 1fr; }
     }
-  </style>
+  
+.simple-slider {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  height:100%;
+  background: #000;
+}
+.simple-slider img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: none;
+}
+.simple-slider img.active { display:block; }
+.slider-btn {
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  width:42px;
+  height:42px;
+  border:none;
+  border-radius:50%;
+  background:rgba(0,0,0,.6);
+  color:#fff;
+  cursor:pointer;
+  font-size:18px;
+  z-index:2;
+}
+.slider-prev{left:10px;}
+.slider-next{right:10px;}
+.slider-btn:hover{background:rgba(0,0,0,.8);}
+
+</style>
 </head>
 
 <body>
@@ -702,6 +737,35 @@
     document.getElementById('tab-3d_art').classList.toggle('active', tab === '3d_art');
   }
 
+  
+function slider(images) {
+  const id = 'slider_' + Math.random().toString(36).substring(2, 9);
+  return `
+    <div class="simple-slider" id="${id}">
+      ${images.map((img, i) =>
+        `<img src="${img}" class="${i === 0 ? 'active' : ''}">`
+      ).join('')}
+      <button class="slider-btn slider-prev" onclick="changeSlide('${id}',-1)">❮</button>
+      <button class="slider-btn slider-next" onclick="changeSlide('${id}',1)">❯</button>
+    </div>
+  `;
+}
+
+function changeSlide(id, dir) {
+  const slider = document.getElementById(id);
+  const slides = slider.querySelectorAll('img');
+  let current = 0;
+  slides.forEach((img, i) => {
+    if (img.classList.contains('active')) current = i;
+    img.classList.remove('active');
+  });
+  current += dir;
+  if (current < 0) current = slides.length - 1;
+  if (current >= slides.length) current = 0;
+  slides[current].classList.add('active');
+}
+
+
   // ── PROJECT DATA ──
   const projects = {
     games: {
@@ -709,7 +773,10 @@
         title: '(Un)Forgotten Concrete',
         skills: ['Unity', 'VR', 'Maya', 'Photoshop', 'Audacity', 'Meta Quest 3'],
         desc: `(Un)Forgotten Concrete is not a traditional video game — it is a VR experience created for the exhibition "Today Is The Day When No One Brought the Ball…" by artist Predrag Terzić. The entire project was developed based on the exhibition author's concept, script, and artistic vision, with the goal of providing visitors with a unique virtual reality experience.\n\nIn the experience, users freely move through and explore a VR environment while different basketball courts and musical pieces transition around them. Basketball-inspired phrases and messages appear throughout, while the changing environments and spatial dynamics serve as key elements of artistic expression.\n\nThe project was developed using the Unity game engine for the Meta Quest 3 headset. Basketball court models were created in Maya, textures produced in Photoshop, and audio edited using Audacity.\n\nThis project represented my first significant publicly exhibited work. Visitors had the opportunity to use a VR headset and experience the project firsthand, providing valuable experience in developing for a real audience and collaborating on an official artistic installation.`,
-        media: `<iframe src="https://www.youtube.com/embed/r1uhyLyiDx4?controls=1&modestbranding=1&rel=0&autoplay=1&mute=1" allowfullscreen></iframe>`
+        media: slider([
+  'render_m1_n2.jpg','render_m2_n1.jpg','render_m3_n1.jpg','render_m4_n2.jpg',
+  'render_m5_n2.jpg','render_m6_n1.jpg','render_m7_n2.jpg','render_m8_n1.jpg',
+  'render_m9_n2.jpg','render_m9_n3.jpg','render_m9_n4.jpg'])
       },
       mars: {
         title: 'Mars Escape',
@@ -741,19 +808,34 @@
         title: '(Un)Forgotten Concrete – 3D Models',
         skills: ['Maya', 'UV Mapping', 'Photoshop', 'Unity', 'Optimization'],
         desc: `For the VR project (Un)Forgotten Concrete, I created all of the basketball court models. The models were built in Maya based on the artist's visual concept and guidelines, with a strong focus on optimization for the Meta Quest 3 platform.\n\nIn addition to modeling, I was responsible for UV mapping and texturing, ensuring that each court had a distinctive visual identity contributing to the overall atmosphere. The models were integrated into Unity as key environmental elements through which the user navigates and explores.`,
-        media: `<iframe src="https://www.youtube.com/embed/gxtalk2ru8c?controls=1&modestbranding=1&rel=0&autoplay=1&mute=1" allowfullscreen></iframe>`
+        media: slider([
+  'render_m1_n2.jpg','render_m2_n1.jpg','render_m3_n1.jpg','render_m4_n2.jpg',
+  'render_m5_n2.jpg','render_m6_n1.jpg','render_m7_n2.jpg','render_m8_n1.jpg',
+  'render_m9_n2.jpg','render_m9_n3.jpg','render_m9_n4.jpg'
+])
       },
       serbian: {
         title: 'Serbian Pavilion – Venice',
         skills: ['Maya', 'UV Mapping', 'Photoshop', 'Architectural Modeling'],
         desc: `For a project application for the Venice Biennale, I created a detailed 3D model of the Serbian Pavilion in Venice based on architectural plans provided by the artist. The model was created in Maya, with particular attention given to accurate proportions.\n\nIn addition to modeling, I was responsible for UV mapping and texturing in Photoshop. The pavilion was modeled with a complete interior — not as a solid geometric structure — allowing for realistic representation of the interior space and greater flexibility for future visualizations and presentations.`,
-        media: `<div style="display:flex;align-items:center;justify-content:center;background:#111;aspect-ratio:16/9;color:#fff;font-size:1rem;opacity:0.5;">Thumbnail coming soon</div>`
+        media: slider([
+  'srb_render_1.jpg',
+  'srb_render_2.jpg',
+  'srb_render_3.jpg',
+  'srb_render_4.jpg'
+])
       },
       robot: {
         title: 'Robot Character',
         skills: ['Maya', 'Hard Surface', 'Topology', 'Game-Ready', 'UV Mapping'],
         desc: `This project involved the creation of a 3D robot model developed as a game-ready asset, featuring optimized geometry and a workflow suitable for use in real-time environments such as video games.\n\nThe model was created in Maya. I worked on geometry organization and optimization to ensure the asset was suitable for further production stages including texturing, rigging, and animation. Particular attention was given to maintaining clean topology and proper edge flow.\n\nI also plan to release a trailer soon, showcasing a set of animations created for this character.`,
-        media: `<div style="display:flex;align-items:center;justify-content:center;background:#111;aspect-ratio:16/9;color:#fff;font-size:1rem;opacity:0.5;">Trailer coming soon</div>`
+        media: slider([
+  'render_1.jpg',
+  'render_2.jpg',
+  'render_3.jpg',
+  'render_4.jpg',
+  'render_5.jpg'
+])
       },
       ika: {
         title: 'Ika',
