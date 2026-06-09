@@ -423,7 +423,7 @@
     }
 
     .skills-grid {
-      display: flex;
+      display: none;
       flex-wrap: wrap;
       gap: 6px;
     }
@@ -943,8 +943,8 @@ function initParallax(id) {
   let currentImg = null;
   let nextImg = null;
   let fade = 1;
-  const PARALLAX_STR = 28; // pixels of shift at max mouse offset
-  const ZOOM = 1.08;       // slight zoom-in to give parallax room
+  const PARALLAX_STR = 12; // pixels of shift at max mouse offset
+  const ZOOM = 1.00;       // slight zoom-in to give parallax room
 
   function resize() {
     const dpr = window.devicePixelRatio || 1;
@@ -978,8 +978,8 @@ function initParallax(id) {
       }
 
       // center + parallax offset (clamped)
-      const maxShiftX = (drawW - W) / 2;
-      const maxShiftY = (drawH - H) / 2;
+      const maxShiftX = (drawW - W) / 4;
+      const maxShiftY = (drawH - H) / 4;
       const shiftX = Math.max(-maxShiftX, Math.min(maxShiftX, currentX * PARALLAX_STR));
       const shiftY = Math.max(-maxShiftY, Math.min(maxShiftY, currentY * PARALLAX_STR));
 
