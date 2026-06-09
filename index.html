@@ -147,7 +147,7 @@
       display: flex;
       align-items: center;
       gap: 3rem;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
     }
 
     .hero-img {
@@ -204,7 +204,7 @@
     .dropdown-content {
       display: none;
       position: absolute;
-      top: calc(100% + 6px);
+      top: calc(100% + 0px);
       left: 0;
       background: var(--surface);
       border: 1px solid var(--border);
@@ -354,6 +354,7 @@
       overflow: hidden;
       box-shadow: var(--card-shadow);
       animation: fadeUp 0.3s ease;
+      min-height: 420px;
     }
     .project-detail.visible { display: flex; flex-direction: row; }
 
@@ -364,8 +365,11 @@
 
     .detail-media {
       flex: 3;
-      background: #000;
+      background: #111;
       position: relative;
+      min-height: 420px;
+      display: flex;
+      align-items: stretch;
     }
     .detail-media iframe,
     .detail-media video {
@@ -393,6 +397,7 @@
 
     .detail-info {
       flex: 1;
+      min-width: 280px;
       padding: 2rem 1.75rem;
       display: flex;
       flex-direction: column;
@@ -413,6 +418,10 @@
       color: var(--text2);
     }
 
+    .detail-info p + p {
+      margin-top: 0.75rem;
+    }
+
     .skills-grid {
       display: flex;
       flex-wrap: wrap;
@@ -429,8 +438,8 @@
     }
 
     .close-detail-btn {
-      align-self: flex-start;
-      padding: 6px 14px;
+      align-self: flex-end;
+      padding: 4px 12px;
       font-size: 0.78rem;
       font-weight: 700;
       background: var(--surface2);
@@ -439,6 +448,7 @@
       cursor: pointer;
       color: var(--text);
       transition: background 0.15s;
+      margin-left: auto;
     }
     .close-detail-btn:hover { background: var(--border); }
 
@@ -528,18 +538,25 @@
 .simple-slider {
   position: relative;
   width: 100%;
-  aspect-ratio: 16/9;
+  height: 100%;
+  min-height: 420px;
   overflow: hidden;
-  height:100%;
-  background: #000;
+  background: #111;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .simple-slider img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
   display: none;
+  background: #111;
 }
-.simple-slider img.active { display:block; }
+.simple-slider img.active { display: block; }
 .slider-btn {
   position:absolute;
   top:50%;
@@ -557,6 +574,150 @@
 .slider-prev{left:10px;}
 .slider-next{right:10px;}
 .slider-btn:hover{background:rgba(0,0,0,.8);}
+
+/* Parallax Three.js canvas overlay */
+.parallax-canvas-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  cursor: none;
+}
+.parallax-canvas-wrap canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+.parallax-canvas-wrap .slider-btn {
+  z-index: 10;
+}
+/* Cursor dot */
+.parallax-cursor {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.85);
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.18);
+  pointer-events: none;
+  transform: translate(-50%,-50%);
+  z-index: 20;
+  opacity: 0;
+  transition: opacity 0.25s;
+  mix-blend-mode: difference;
+}
+.slider-counter {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.45);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  z-index: 10;
+  pointer-events: none;
+  letter-spacing: 0.5px;
+}
+
+.software-used {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+.sw-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-right: 2px;
+}
+.sw-tag {
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: var(--accent);
+  color: #fff;
+  letter-spacing: 0.3px;
+}
+body.dark-mode .sw-tag { background: #444; color: #eee; }
+
+
+
+:root{--ease-premium:cubic-bezier(.22,1,.36,1);}
+
+header{
+ background:rgba(66,66,66,.82)!important;
+ backdrop-filter:blur(16px);
+ -webkit-backdrop-filter:blur(16px);
+}
+
+::-webkit-scrollbar{width:6px!important;}
+::-webkit-scrollbar-thumb{border-radius:999px!important;}
+
+.project-card{
+ border-radius:18px!important;
+ transition:all .22s var(--ease-premium)!important;
+}
+.project-card img{
+ transition:transform .35s var(--ease-premium)!important;
+}
+.project-card:hover img{transform:scale(1.06);}
+
+.toggle-label.active{
+ box-shadow:0 8px 20px rgba(0,0,0,.18);
+}
+
+.sw-tag{
+ border-radius:999px!important;
+ padding:5px 12px!important;
+}
+
+.detail-info{
+ scroll-behavior:smooth;
+}
+.detail-info::-webkit-scrollbar{width:5px;}
+.detail-info::-webkit-scrollbar-thumb{border-radius:999px;}
+
+.dropdown-content{
+ display:block!important;
+ opacity:0;
+ visibility:hidden;
+ transform:translateY(8px);
+ transition:all .2s var(--ease-premium);
+ pointer-events:none;
+}
+.dropdown:hover .dropdown-content{
+ opacity:1;
+ visibility:visible;
+ transform:translateY(0);
+ pointer-events:auto;
+}
+
+.close-floating{
+ position:absolute;
+ top:14px;
+ right:14px;
+ width:42px;
+ height:42px;
+ border:none;
+ border-radius:50%;
+ background:rgba(0,0,0,.65);
+ color:#fff;
+ cursor:pointer;
+ z-index:50;
+ backdrop-filter:blur(10px);
+}
+.close-floating:hover{transform:scale(1.08);}
 
 </style>
 </head>
@@ -585,7 +746,7 @@
     <div class="hero-content">
       <h1>Hello, I'm Nikola Veinović</h1>
       <h3>Game Developer &amp; 3D Artist from Serbia</h3>
-      <p class="hero-description">I specialize in 3D modeling, texturing, and game development. Here you can explore some of my projects.</p>
+      <p class="hero-description">My work focuses on 3D modeling, animation, and game development. Here you can explore some of my projects.</p>
       <div class="cv-buttons">
         <div class="dropdown">
           <button class="cv-btn">Download CV ▾</button>
@@ -635,21 +796,21 @@
                alt="(Un)Forgotten Concrete" />
           <div class="card-label">(Un)Forgotten Concrete</div>
         </div>
-        <div class="project-card" onclick="openProject('games','mars')">
-          <img src="mars_escape.jpg" alt="Mars Escape" />
-          <div class="card-label">Mars Escape</div>
-        </div>
-        <div class="project-card" onclick="openProject('games','wayout')">
-          <img src="wayout.jpg" alt="Way Out" />
-          <div class="card-label">Way Out</div>
+        <div class="project-card" onclick="openProject('games','moondefense')">
+          <img src="moon_defense.jpg" alt="Moon Defense" />
+          <div class="card-label">Moon Defense</div>
         </div>
         <div class="project-card" onclick="openProject('games','exit')">
           <img src="exit.jpg" alt="Exit" />
           <div class="card-label">Exit</div>
         </div>
-        <div class="project-card" onclick="openProject('games','moondefense')">
-          <img src="moon_defense.jpg" alt="Moon Defense" />
-          <div class="card-label">Moon Defense</div>
+        <div class="project-card" onclick="openProject('games','wayout')">
+          <img src="wayout.jpg" alt="Way Out" />
+          <div class="card-label">Way Out</div>
+        </div>
+        <div class="project-card" onclick="openProject('games','mars')">
+          <img src="mars_escape.jpg" alt="Mars Escape" />
+          <div class="card-label">Mars Escape</div>
         </div>
       </div>
 
@@ -657,7 +818,7 @@
       <div class="project-detail" id="detail-games">
         <div class="detail-media" id="detail-games-media"></div>
         <div class="detail-info" id="detail-games-info">
-          <button class="close-detail-btn" onclick="closeDetail('games')">✕ Close</button>
+          
           <h3 id="detail-games-title"></h3>
           <div class="skills-grid" id="detail-games-skills"></div>
           <p id="detail-games-desc"></p>
@@ -668,21 +829,21 @@
     <!-- 3D ART CARDS -->
     <div id="panel-3d_art" style="display:none">
       <div class="cards-grid">
-        <div class="project-card" onclick="openProject('3d_art','unforgotten3d')">
-          <img src="(un)forgotten_concrete.jpg" alt="(Un)Forgotten Concrete 3D" />
-          <div class="card-label">(Un)Forgotten Concrete</div>
-        </div>
-        <div class="project-card" onclick="openProject('3d_art','serbian')">
-          <img src="serbian_pavilion.jpg"
-               onerror="this.style.background='#ddd';this.removeAttribute('src')"
-               alt="Serbian Pavilion" />
-          <div class="card-label">Serbian Pavilion – Venice</div>
-        </div>
         <div class="project-card" onclick="openProject('3d_art','robot')">
-          <img src="robot.jpg"
+          <img src="render_1.jpg"
                onerror="this.style.background='#ddd';this.removeAttribute('src')"
                alt="Robot Character" />
           <div class="card-label">Robot Character</div>
+        </div>
+        <div class="project-card" onclick="openProject('3d_art','unforgotten3d')">
+          <img src="render_m5_n2.jpg" alt="(Un)Forgotten Concrete 3D" />
+          <div class="card-label">(Un)Forgotten Concrete</div>
+        </div>
+        <div class="project-card" onclick="openProject('3d_art','serbian')">
+          <img src="srb_render_1.jpg"
+               onerror="this.style.background='#ddd';this.removeAttribute('src')"
+               alt="Serbian Pavilion" />
+          <div class="card-label">Serbian Pavilion – Venice</div>
         </div>
         <div class="project-card" onclick="openProject('3d_art','ika')">
           <img src="ika.png" alt="Ika" />
@@ -694,7 +855,7 @@
       <div class="project-detail" id="detail-3d_art">
         <div class="detail-media" id="detail-3d_art-media"></div>
         <div class="detail-info" id="detail-3d_art-info">
-          <button class="close-detail-btn" onclick="closeDetail('3d_art')">✕ Close</button>
+          
           <h3 id="detail-3d_art-title"></h3>
           <div class="skills-grid" id="detail-3d_art-skills"></div>
           <p id="detail-3d_art-desc"></p>
@@ -738,32 +899,154 @@
   }
 
   
+// ── PARALLAX SLIDER ──
 function slider(images) {
   const id = 'slider_' + Math.random().toString(36).substring(2, 9);
   return `
-    <div class="simple-slider" id="${id}">
-      ${images.map((img, i) =>
-        `<img src="${img}" class="${i === 0 ? 'active' : ''}">`
-      ).join('')}
-      <button class="slider-btn slider-prev" onclick="changeSlide('${id}',-1)">❮</button>
-      <button class="slider-btn slider-next" onclick="changeSlide('${id}',1)">❯</button>
+    <div class="parallax-canvas-wrap" id="${id}" data-images='${JSON.stringify(images)}' data-current="0">
+      <canvas id="${id}_canvas"></canvas>
+      <div class="parallax-cursor" id="${id}_cursor"></div>
+      <div class="slider-counter" id="${id}_counter">1 / ${images.length}</div>
+      <button class="slider-btn slider-prev" onclick="parallaxSlide('${id}',-1)">❮</button>
+      <button class="slider-btn slider-next" onclick="parallaxSlide('${id}',1)">❯</button>
     </div>
   `;
 }
 
-function changeSlide(id, dir) {
-  const slider = document.getElementById(id);
-  const slides = slider.querySelectorAll('img');
-  let current = 0;
-  slides.forEach((img, i) => {
-    if (img.classList.contains('active')) current = i;
-    img.classList.remove('active');
-  });
-  current += dir;
-  if (current < 0) current = slides.length - 1;
-  if (current >= slides.length) current = 0;
-  slides[current].classList.add('active');
+const _parallaxInstances = {};
+
+function parallaxSlide(id, dir) {
+  const wrap = document.getElementById(id);
+  if (!wrap) return;
+  const images = JSON.parse(wrap.dataset.images);
+  let cur = parseInt(wrap.dataset.current) || 0;
+  cur = (cur + dir + images.length) % images.length;
+  wrap.dataset.current = cur;
+  const counter = document.getElementById(id + '_counter');
+  if (counter) counter.textContent = (cur + 1) + ' / ' + images.length;
+  const inst = _parallaxInstances[id];
+  if (inst) inst.loadImage(images[cur]);
 }
+
+function initParallax(id) {
+  const wrap = document.getElementById(id);
+  if (!wrap || _parallaxInstances[id]) return;
+
+  const canvas = document.getElementById(id + '_canvas');
+  const cursor = document.getElementById(id + '_cursor');
+  const images = JSON.parse(wrap.dataset.images);
+  const ctx = canvas.getContext('2d');
+
+  let W = 0, H = 0;
+  let targetX = 0, targetY = 0;
+  let currentX = 0, currentY = 0;
+  let currentImg = null;
+  let nextImg = null;
+  let fade = 1;
+  const PARALLAX_STR = 28; // pixels of shift at max mouse offset
+  const ZOOM = 1.08;       // slight zoom-in to give parallax room
+
+  function resize() {
+    const dpr = window.devicePixelRatio || 1;
+    W = wrap.clientWidth;
+    H = wrap.clientHeight;
+    canvas.width  = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width  = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.scale(dpr, dpr);
+    draw();
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    function drawImg(img, alpha) {
+      if (!img || !img.complete || !img.naturalWidth) return;
+      ctx.globalAlpha = alpha;
+      const imgAR = img.naturalWidth / img.naturalHeight;
+      const canvasAR = W / H;
+
+      // cover fit
+      let drawW, drawH;
+      if (imgAR > canvasAR) {
+        drawH = H * ZOOM;
+        drawW = drawH * imgAR;
+      } else {
+        drawW = W * ZOOM;
+        drawH = drawW / imgAR;
+      }
+
+      // center + parallax offset (clamped)
+      const maxShiftX = (drawW - W) / 2;
+      const maxShiftY = (drawH - H) / 2;
+      const shiftX = Math.max(-maxShiftX, Math.min(maxShiftX, currentX * PARALLAX_STR));
+      const shiftY = Math.max(-maxShiftY, Math.min(maxShiftY, currentY * PARALLAX_STR));
+
+      const x = (W - drawW) / 2 + shiftX;
+      const y = (H - drawH) / 2 + shiftY;
+
+      ctx.drawImage(img, x, y, drawW, drawH);
+      ctx.globalAlpha = 1;
+    }
+
+    // draw bg fill
+    ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--bg').trim() || '#f0f0f0';
+    ctx.fillRect(0, 0, W, H);
+
+    if (nextImg && fade < 1) {
+      drawImg(currentImg, 1);
+      drawImg(nextImg, fade);
+    } else {
+      drawImg(currentImg, 1);
+    }
+  }
+
+  function animate() {
+    requestAnimationFrame(animate);
+    const ease = 0.07;
+    currentX += (targetX - currentX) * ease;
+    currentY += (targetY - currentY) * ease;
+    if (nextImg && fade < 1) {
+      fade = Math.min(1, fade + 0.06);
+      if (fade >= 1) { currentImg = nextImg; nextImg = null; }
+    }
+    draw();
+  }
+
+  function loadImage(src) {
+    const img = new Image();
+    img.onload = () => {
+      if (!currentImg) { currentImg = img; fade = 1; }
+      else { nextImg = img; fade = 0; }
+    };
+    img.src = src;
+  }
+
+  wrap.addEventListener('mousemove', (e) => {
+    const r = wrap.getBoundingClientRect();
+    targetX = (e.clientX - r.left) / r.width  - 0.5;  // -0.5 .. 0.5
+    targetY = (e.clientY - r.top)  / r.height - 0.5;
+    if (cursor) {
+      cursor.style.left = (e.clientX - r.left) + 'px';
+      cursor.style.top  = (e.clientY - r.top)  + 'px';
+      cursor.style.opacity = '1';
+    }
+  });
+  wrap.addEventListener('mouseleave', () => {
+    targetX = 0; targetY = 0;
+    if (cursor) cursor.style.opacity = '0';
+  });
+
+  const ro = new ResizeObserver(resize);
+  ro.observe(wrap);
+  resize();
+  loadImage(images[0]);
+  animate();
+
+  _parallaxInstances[id] = { loadImage };
+}
+
 
 
   // ── PROJECT DATA ──
@@ -772,63 +1055,45 @@ function changeSlide(id, dir) {
       unforgotten: {
         title: '(Un)Forgotten Concrete',
         skills: ['Unity', 'VR', 'Maya', 'Photoshop', 'Audacity', 'Meta Quest 3'],
-        desc: `(Un)Forgotten Concrete is not a traditional video game — it is a VR experience created for the exhibition "Today Is The Day When No One Brought the Ball…" by artist Predrag Terzić. The entire project was developed based on the exhibition author's concept, script, and artistic vision, with the goal of providing visitors with a unique virtual reality experience.\n\nIn the experience, users freely move through and explore a VR environment while different basketball courts and musical pieces transition around them. Basketball-inspired phrases and messages appear throughout, while the changing environments and spatial dynamics serve as key elements of artistic expression.\n\nThe project was developed using the Unity game engine for the Meta Quest 3 headset. Basketball court models were created in Maya, textures produced in Photoshop, and audio edited using Audacity.\n\nThis project represented my first significant publicly exhibited work. Visitors had the opportunity to use a VR headset and experience the project firsthand, providing valuable experience in developing for a real audience and collaborating on an official artistic installation.`,
-        media: slider([
-  'render_m1_n2.jpg','render_m2_n1.jpg','render_m3_n1.jpg','render_m4_n2.jpg',
-  'render_m5_n2.jpg','render_m6_n1.jpg','render_m7_n2.jpg','render_m8_n1.jpg',
-  'render_m9_n2.jpg','render_m9_n3.jpg','render_m9_n4.jpg'])
-      },
-      mars: {
-        title: 'Mars Escape',
-        skills: ['Unity', 'Bolt', 'Photoshop', 'Audacity', 'Pixel Art', 'Level Design'],
-        desc: `Mars Escape was my first contact with game development – a 2D platformer created as a demo project for the Introduction to Video Games course at university. The player explores the surface of Mars, collecting coins and avoiding aliens that patrol the platforms.\n\nThe game was developed in Unity using the Bolt visual scripting tool. All visual assets were created in Photoshop with a pixel art style, and sound effects were edited in Audacity. Mars Escape gave me a solid introduction to the game development process.`,
-        media: `<iframe src="https://www.youtube.com/embed/EQ4SlKFYTSM?controls=1&modestbranding=1&rel=0&autoplay=1&mute=1" allowfullscreen></iframe>`
-      },
-      wayout: {
-        title: 'Way Out',
-        skills: ['OpenGL', 'C++', 'Puzzle Design', 'Photoshop', 'Audacity'],
-        desc: `Way Out is a 2D pixel art puzzle game with escape room elements, developed using OpenGL. The game consists of three levels where the player solves logical puzzles — moving books, chess pieces, and interpreting hidden messages — to find keys and escape.\n\nAll visual assets were created in Photoshop, and sound effects were edited in Audacity.`,
-        media: `<iframe src="https://www.youtube.com/embed/fEhewogkyfs?controls=1&modestbranding=1&rel=0&autoplay=1&mute=1" allowfullscreen></iframe>`
-      },
-      exit: {
-        title: 'Exit',
-        skills: ['Unity', 'Photoshop', 'Maya', 'Audacity', 'Story Design'],
-        desc: `Exit is a top-down RPG demo in which the player takes on the role of Petar Venčić – a man who, after clinical death, wakes up buried in his own grave. He doesn't know how he survived, but he knows he must find a way out of the eerie cemetery.\n\nThe game features an intro sequence made up of hand-drawn images accompanied by typewriter-style text. Developed using Unity, Photoshop, Maya, and Audacity.`,
-        media: `<iframe src="https://www.youtube.com/embed/r1uhyLyiDx4?controls=1&modestbranding=1&rel=0&autoplay=1&mute=1" allowfullscreen></iframe>`
+        software: ['Unity', 'Maya', 'Photoshop', 'Audacity'],
+        desc: `<p>(Un)Forgotten Concrete is not a traditional video game — it is a VR experience created for the exhibition <em>"Today Is The Day When No One Brought the Ball…"</em> by artist Predrag Terzić. The entire project was developed based on the exhibition author's concept, script, and artistic vision, with the goal of providing visitors with a unique virtual reality experience.</p><p>In the experience, users freely move through and explore a VR environment while different basketball courts and musical pieces transition around them. Basketball-inspired phrases and messages appear throughout, while the changing environments and spatial dynamics serve as key elements of artistic expression.</p><p>The project was developed using the Unity game engine for the Meta Quest 3 headset. Basketball court models were created in Maya, textures produced in Photoshop, and audio edited using Audacity.</p><p>This project represented my first significant publicly exhibited work. Visitors had the opportunity to use a VR headset and experience the project firsthand, providing valuable experience in developing for a real audience and collaborating on an official artistic installation.</p>`,
+        media: `<iframe src="https://www.youtube.com/embed/UuvJNSmhsQ4?controls=1&modestbranding=1&rel=0&autoplay=1&mute=1" allowfullscreen></iframe>`
       },
       moondefense: {
         title: 'Moon Defense – The Zarax Menace',
         skills: ['Unity', 'AI Logic', 'Tower Defense', 'Photoshop', 'Maya', 'Audacity'],
-        desc: `Moon Defense is a 3D tower defense strategy set in the year 2300 on the Moon, where the player defends Luna Link, the main communication tower between the Moon and Earth, from mysterious alien ships known as Zarax.\n\nEnemies move using the A* algorithm, and a UFO randomly spawns new enemies at different points. The game implements A* pathfinding, state machine behavior, and advanced AI logic. Developed using Unity, Maya, Photoshop, and Audacity.`,
+        software: ['Unity', 'Maya', 'Photoshop', 'Audacity'],
+        desc: `<p>Moon Defense is a 3D tower defense strategy set in the year 2300 on the Moon, where the player defends Luna Link, the main communication tower between the Moon and Earth, from mysterious alien ships known as Zarax.</p><p>Enemies move using the A* algorithm, and a UFO randomly spawns new enemies at different points. The game implements A* pathfinding, state machine behavior, and advanced AI logic. Developed using Unity, Maya, Photoshop, and Audacity.</p>`,
         media: `<iframe src="https://www.youtube.com/embed/sx8Vl0dXy60?controls=1&modestbranding=1&rel=0&autoplay=1&mute=1" allowfullscreen></iframe>`
+      },
+      exit: {
+        title: 'Exit',
+        skills: ['Unity', 'Photoshop', 'Maya', 'Audacity', 'Story Design'],
+        software: ['Unity', 'Maya', 'Photoshop', 'Audacity'],
+        desc: `<p>Exit is a top-down RPG demo in which the player takes on the role of Petar Venčić – a man who, after clinical death, wakes up buried in his own grave. He doesn't know how he survived, but he knows he must find a way out of the eerie cemetery.</p><p>The game features an intro sequence made up of hand-drawn images accompanied by typewriter-style text. Developed using Unity, Photoshop, Maya, and Audacity.</p>`,
+        media: `<iframe src="https://www.youtube.com/embed/r1uhyLyiDx4?controls=1&modestbranding=1&rel=0&autoplay=1&mute=1" allowfullscreen></iframe>`
+      },
+      wayout: {
+        title: 'Way Out',
+        skills: ['OpenGL', 'C++', 'Puzzle Design', 'Photoshop', 'Audacity'],
+        software: ['OpenGL', 'Photoshop', 'Audacity'],
+        desc: `<p>Way Out is a 2D pixel art puzzle game with escape room elements, developed using OpenGL. The game consists of three levels where the player solves logical puzzles — moving books, chess pieces, and interpreting hidden messages — to find keys and escape.</p><p>All visual assets were created in Photoshop, and sound effects were edited in Audacity.</p>`,
+        media: `<iframe src="https://www.youtube.com/embed/fEhewogkyfs?controls=1&modestbranding=1&rel=0&autoplay=1&mute=1" allowfullscreen></iframe>`
+      },
+      mars: {
+        title: 'Mars Escape',
+        skills: ['Unity', 'Bolt', 'Photoshop', 'Audacity', 'Pixel Art', 'Level Design'],
+        software: ['Unity', 'Photoshop', 'Audacity'],
+        desc: `<p>Mars Escape was my first contact with game development – a 2D platformer created as a demo project for the Introduction to Video Games course at university. The player explores the surface of Mars, collecting coins and avoiding aliens that patrol the platforms.</p><p>The game was developed in Unity using the Bolt visual scripting tool. All visual assets were created in Photoshop with a pixel art style, and sound effects were edited in Audacity. Mars Escape gave me a solid introduction to the game development process.</p>`,
+        media: `<iframe src="https://www.youtube.com/embed/EQ4SlKFYTSM?controls=1&modestbranding=1&rel=0&autoplay=1&mute=1" allowfullscreen></iframe>`
       }
     },
     '3d_art': {
-      unforgotten3d: {
-        title: '(Un)Forgotten Concrete – 3D Models',
-        skills: ['Maya', 'UV Mapping', 'Photoshop', 'Unity', 'Optimization'],
-        desc: `For the VR project (Un)Forgotten Concrete, I created all of the basketball court models. The models were built in Maya based on the artist's visual concept and guidelines, with a strong focus on optimization for the Meta Quest 3 platform.\n\nIn addition to modeling, I was responsible for UV mapping and texturing, ensuring that each court had a distinctive visual identity contributing to the overall atmosphere. The models were integrated into Unity as key environmental elements through which the user navigates and explores.`,
-        media: slider([
-  'render_m1_n2.jpg','render_m2_n1.jpg','render_m3_n1.jpg','render_m4_n2.jpg',
-  'render_m5_n2.jpg','render_m6_n1.jpg','render_m7_n2.jpg','render_m8_n1.jpg',
-  'render_m9_n2.jpg','render_m9_n3.jpg','render_m9_n4.jpg'
-])
-      },
-      serbian: {
-        title: 'Serbian Pavilion – Venice',
-        skills: ['Maya', 'UV Mapping', 'Photoshop', 'Architectural Modeling'],
-        desc: `For a project application for the Venice Biennale, I created a detailed 3D model of the Serbian Pavilion in Venice based on architectural plans provided by the artist. The model was created in Maya, with particular attention given to accurate proportions.\n\nIn addition to modeling, I was responsible for UV mapping and texturing in Photoshop. The pavilion was modeled with a complete interior — not as a solid geometric structure — allowing for realistic representation of the interior space and greater flexibility for future visualizations and presentations.`,
-        media: slider([
-  'srb_render_1.jpg',
-  'srb_render_2.jpg',
-  'srb_render_3.jpg',
-  'srb_render_4.jpg'
-])
-      },
       robot: {
         title: 'Robot Character',
         skills: ['Maya', 'Hard Surface', 'Topology', 'Game-Ready', 'UV Mapping'],
-        desc: `This project involved the creation of a 3D robot model developed as a game-ready asset, featuring optimized geometry and a workflow suitable for use in real-time environments such as video games.\n\nThe model was created in Maya. I worked on geometry organization and optimization to ensure the asset was suitable for further production stages including texturing, rigging, and animation. Particular attention was given to maintaining clean topology and proper edge flow.\n\nI also plan to release a trailer soon, showcasing a set of animations created for this character.`,
+        software: ['Maya'],
+        desc: `<p>This project involved the creation of a 3D robot model developed as a game-ready asset, featuring optimized geometry and a workflow suitable for use in real-time environments such as video games.</p><p>The model was created in Maya. I worked on geometry organization and optimization to ensure the asset was suitable for further production stages including texturing, rigging, and animation. Particular attention was given to maintaining clean topology and proper edge flow.</p><p>I also plan to release a trailer soon, showcasing a set of animations created for this character.</p>`,
         media: slider([
   'render_1.jpg',
   'render_2.jpg',
@@ -837,10 +1102,34 @@ function changeSlide(id, dir) {
   'render_5.jpg'
 ])
       },
+      unforgotten3d: {
+        title: '(Un)Forgotten Concrete',
+        skills: ['Maya', 'UV Mapping', 'Photoshop', 'Unity', 'Optimization'],
+        software: ['Maya', 'Photoshop'],
+        desc: `<p>For the VR project (Un)Forgotten Concrete, I created all of the basketball court models. The models were built in Maya based on the artist's visual concept and guidelines, with a strong focus on optimization for the Meta Quest 3 platform.</p><p>In addition to modeling, I was responsible for UV mapping and texturing, ensuring that each court had a distinctive visual identity contributing to the overall atmosphere. The models were integrated into Unity as key environmental elements through which the user navigates and explores.</p>`,
+        media: slider([
+  'render_m1_n2.jpg','render_m4_n2.jpg','render_m2_n1.jpg','render_m5_n2.jpg',
+  'render_m3_n1.jpg','render_m8_n1.jpg','render_m7_n2.jpg','render_m6_n1.jpg',
+  'render_m9_n2.jpg'
+])
+      },
+      serbian: {
+        title: 'Serbian Pavilion – Venice',
+        skills: ['Maya', 'UV Mapping', 'Photoshop', 'Architectural Modeling'],
+        software: ['Maya', 'Photoshop'],
+        desc: `<p>For a project application for the Venice Biennale, I created a detailed 3D model of the Serbian Pavilion in Venice based on architectural plans provided by the artist. The model was created in Maya, with particular attention given to accurate proportions.</p><p>In addition to modeling, I was responsible for UV mapping and texturing in Photoshop. The pavilion was modeled with a complete interior — not as a solid geometric structure — allowing for realistic representation of the interior space and greater flexibility for future visualizations and presentations.</p>`,
+        media: slider([
+  'srb_render_1.jpg',
+  'srb_render_3.jpg',
+  'srb_render_4.jpg',
+  'srb_render_2.jpg'
+])
+      },
       ika: {
         title: 'Ika',
         skills: ['Maya', 'Animation', '3D Modeling', 'Rendering', 'Storyboarding'],
-        desc: `This animation was created as part of a university project and represents my first major work in 3D animation. It follows a scientist named Ika, who is excited about a portal he has built. He rides his hoverboard around the dining table, waves, then heads through the hallway into the garage, where he accidentally falls over the railing.\n\nThe animation was originally imagined as a backstory for a game I was planning to develop. While working on it, I discovered how passionate I am about animation. I created the entire project myself — from modeling and environment design to animation and rendering.`,
+        software: ['Maya'],
+        desc: `<p>This animation was created as part of a university project and represents my first major work in 3D animation. It follows a scientist named Ika, who is excited about a portal he has built. He rides his hoverboard around the dining table, waves, then heads through the hallway into the garage, where he accidentally falls over the railing.</p><p>The animation was originally imagined as a backstory for a game I was planning to develop. While working on it, I discovered how passionate I am about animation. I created the entire project myself — from modeling and environment design to animation and rendering.</p>`,
         media: `<iframe src="https://www.youtube.com/embed/gxtalk2ru8c?controls=1&modestbranding=1&rel=0&autoplay=1&mute=1" allowfullscreen></iframe>`
       }
     }
@@ -858,12 +1147,34 @@ function changeSlide(id, dir) {
 
     // Populate
     document.getElementById(`detail-${panel}-title`).textContent = data.title;
-    document.getElementById(`detail-${panel}-desc`).textContent = data.desc;
+    document.getElementById(`detail-${panel}-desc`).innerHTML = data.desc;
 
     const skillsEl = document.getElementById(`detail-${panel}-skills`);
     skillsEl.innerHTML = data.skills.map(s => `<span class="skill-box">${s}</span>`).join('');
 
-    document.getElementById(`detail-${panel}-media`).innerHTML = data.media;
+    document.getElementById(`detail-${panel}-media`).innerHTML = `<button class="close-floating" onclick="closeDetail('${panel}')">✕</button>` + data.media;
+
+    // Init canvas parallax if slider was injected
+    setTimeout(() => {
+      const wrap = document.querySelector(`#detail-${panel}-media .parallax-canvas-wrap`);
+      if (wrap) initParallax(wrap.id);
+    }, 30);
+
+    // Software used
+    let swEl = document.getElementById(`detail-${panel}-software`);
+    if (!swEl) {
+      swEl = document.createElement('div');
+      swEl.id = `detail-${panel}-software`;
+      swEl.className = 'software-used';
+      const detailInfo = document.getElementById(`detail-${panel}-info`);
+      detailInfo.appendChild(swEl);
+    }
+    if (data.software && data.software.length) {
+      swEl.innerHTML = '<span class="sw-label">Made with</span>' + data.software.map(s => `<span class="sw-tag">${s}</span>`).join('');
+      swEl.style.display = '';
+    } else {
+      swEl.style.display = 'none';
+    }
 
     const detailEl = document.getElementById(`detail-${panel}`);
     detailEl.classList.add('visible');
@@ -877,7 +1188,11 @@ function changeSlide(id, dir) {
   function closeDetail(panel) {
     const detailEl = document.getElementById(`detail-${panel}`);
     detailEl.classList.remove('visible');
-    document.getElementById(`detail-${panel}-media`).innerHTML = '';
+    // Clear parallax instance cache so re-opening re-initializes
+    const mediaEl = document.getElementById(`detail-${panel}-media`);
+    const wrap = mediaEl.querySelector('.parallax-canvas-wrap');
+    if (wrap) delete _parallaxInstances[wrap.id];
+    mediaEl.innerHTML = '';
     document.querySelectorAll(`#panel-${panel} .project-card`).forEach(c => c.classList.remove('selected'));
     currentOpen[panel] = null;
   }
