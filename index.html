@@ -928,9 +928,54 @@ function parallaxSlide(id, dir) {
   if (inst) inst.loadImage(images[cur]);
 }
 
+// ── FULLSCREEN LIGHTBOX ──
+(function(){
+  const overlay = document.createElement('div');
+  overlay.id = 'fs-overlay';
+  Object.assign(overlay.style, {
+    display:'none', position:'fixed', inset:'0', zIndex:'9999',
+    background:'rgba(0,0,0,0.92)', alignItems:'center', justifyContent:'center',
+    cursor:'zoom-out'
+  });
+  const fsImg = document.createElement('img');
+  Object.assign(fsImg.style, {
+    maxWidth:'94vw', maxHeight:'94vh', objectFit:'contain',
+    borderRadius:'6px', boxShadow:'0 8px 48px rgba(0,0,0,0.7)',
+    pointerEvents:'none', userSelect:'none'
+  });
+  const closeBtn = document.createElement('button');
+  closeBtn.textContent = '✕';
+  Object.assign(closeBtn.style, {
+    position:'absolute', top:'18px', right:'22px',
+    background:'rgba(255,255,255,0.12)', border:'none', color:'#fff',
+    fontSize:'1.4rem', width:'44px', height:'44px', borderRadius:'50%',
+    cursor:'pointer', backdropFilter:'blur(8px)'
+  });
+  overlay.appendChild(fsImg);
+  overlay.appendChild(closeBtn);
+  document.body.appendChild(overlay);
+
+  function closeFs(){ overlay.style.display='none'; document.body.style.overflow=''; }
+  overlay.addEventListener('click', closeFs);
+  closeBtn.addEventListener('click', closeFs);
+  document.addEventListener('keydown', e => { if(e.key==='Escape') closeFs(); });
+
+  window.openFullscreen = function(src){
+    fsImg.src = src;
+    overlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  };
+})();
+
 function initParallax(id) {
   const wrap = document.getElementById(id);
-  if (!wrap || _parallaxInstances[id]) return;
+  if (!wrap) return;
+
+  // ── DESTROY old instance if one exists (fixes zombie RAF loops) ──
+  if (_parallaxInstances[id]) {
+    _parallaxInstances[id].destroy();
+    delete _parallaxInstances[id];
+  }
 
   const canvas = document.getElementById(id + '_canvas');
   const cursor = document.getElementById(id + '_cursor');
@@ -943,8 +988,10 @@ function initParallax(id) {
   let currentImg = null;
   let nextImg = null;
   let fade = 1;
-  const PARALLAX_STR = 12; // pixels of shift at max mouse offset
-  const ZOOM = 1.00;       // slight zoom-in to give parallax room
+  let rafId = null;
+  let alive = true;           // ← flag to kill the loop on destroy
+  const PARALLAX_STR = 12;
+  const ZOOM = 1.00;
 
   function resize() {
     const dpr = window.devicePixelRatio || 1;
@@ -966,32 +1013,21 @@ function initParallax(id) {
       ctx.globalAlpha = alpha;
       const imgAR = img.naturalWidth / img.naturalHeight;
       const canvasAR = W / H;
-
-      // cover fit
       let drawW, drawH;
       if (imgAR > canvasAR) {
-        drawH = H * ZOOM;
-        drawW = drawH * imgAR;
+        drawH = H * ZOOM; drawW = drawH * imgAR;
       } else {
-        drawW = W * ZOOM;
-        drawH = drawW / imgAR;
+        drawW = W * ZOOM; drawH = drawW / imgAR;
       }
-
-      // center + parallax offset (clamped)
       const maxShiftX = (drawW - W) / 4;
       const maxShiftY = (drawH - H) / 4;
       const shiftX = Math.max(-maxShiftX, Math.min(maxShiftX, currentX * PARALLAX_STR));
       const shiftY = Math.max(-maxShiftY, Math.min(maxShiftY, currentY * PARALLAX_STR));
-
-      const x = (W - drawW) / 2 + shiftX;
-      const y = (H - drawH) / 2 + shiftY;
-
-      ctx.drawImage(img, x, y, drawW, drawH);
+      ctx.drawImage(img, (W - drawW) / 2 + shiftX, (H - drawH) / 2 + shiftY, drawW, drawH);
       ctx.globalAlpha = 1;
     }
 
-    // draw bg fill
-    ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--bg').trim() || '#f0f0f0';
+    ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--bg').trim() || '#111';
     ctx.fillRect(0, 0, W, H);
 
     if (nextImg && fade < 1) {
@@ -1003,7 +1039,8 @@ function initParallax(id) {
   }
 
   function animate() {
-    requestAnimationFrame(animate);
+    if (!alive) return;          // ← stops the loop when destroyed
+    rafId = requestAnimationFrame(animate);
     const ease = 0.07;
     currentX += (targetX - currentX) * ease;
     currentY += (targetY - currentY) * ease;
@@ -1023,20 +1060,30 @@ function initParallax(id) {
     img.src = src;
   }
 
-  wrap.addEventListener('mousemove', (e) => {
+  // ── Fullscreen on canvas click ──
+  canvas.style.cursor = 'zoom-in';
+  canvas.addEventListener('click', () => {
+    const src = currentImg && currentImg.src;
+    if (src) openFullscreen(src);
+  });
+
+  const onMouseMove = (e) => {
     const r = wrap.getBoundingClientRect();
-    targetX = (e.clientX - r.left) / r.width  - 0.5;  // -0.5 .. 0.5
+    targetX = (e.clientX - r.left) / r.width  - 0.5;
     targetY = (e.clientY - r.top)  / r.height - 0.5;
     if (cursor) {
       cursor.style.left = (e.clientX - r.left) + 'px';
       cursor.style.top  = (e.clientY - r.top)  + 'px';
       cursor.style.opacity = '1';
     }
-  });
-  wrap.addEventListener('mouseleave', () => {
+  };
+  const onMouseLeave = () => {
     targetX = 0; targetY = 0;
     if (cursor) cursor.style.opacity = '0';
-  });
+  };
+
+  wrap.addEventListener('mousemove', onMouseMove);
+  wrap.addEventListener('mouseleave', onMouseLeave);
 
   const ro = new ResizeObserver(resize);
   ro.observe(wrap);
@@ -1044,7 +1091,33 @@ function initParallax(id) {
   loadImage(images[0]);
   animate();
 
-  _parallaxInstances[id] = { loadImage };
+  // ── Fullscreen button ──
+  const fsBtn = document.createElement('button');
+  fsBtn.innerHTML = '⛶';
+  fsBtn.title = 'Fullscreen';
+  Object.assign(fsBtn.style, {
+    position:'absolute', bottom:'44px', right:'10px',
+    width:'36px', height:'36px', border:'none', borderRadius:'50%',
+    background:'rgba(0,0,0,0.6)', color:'#fff', cursor:'pointer',
+    fontSize:'16px', zIndex:'15', backdropFilter:'blur(4px)'
+  });
+  fsBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const src = currentImg && currentImg.src;
+    if (src) openFullscreen(src);
+  });
+  wrap.appendChild(fsBtn);
+
+  _parallaxInstances[id] = {
+    loadImage,
+    destroy() {
+      alive = false;
+      if (rafId) cancelAnimationFrame(rafId);
+      ro.disconnect();
+      wrap.removeEventListener('mousemove', onMouseMove);
+      wrap.removeEventListener('mouseleave', onMouseLeave);
+    }
+  };
 }
 
 
@@ -1187,10 +1260,12 @@ function initParallax(id) {
   function closeDetail(panel) {
     const detailEl = document.getElementById(`detail-${panel}`);
     detailEl.classList.remove('visible');
-    // Clear parallax instance cache so re-opening re-initializes
     const mediaEl = document.getElementById(`detail-${panel}-media`);
     const wrap = mediaEl.querySelector('.parallax-canvas-wrap');
-    if (wrap) delete _parallaxInstances[wrap.id];
+    if (wrap && _parallaxInstances[wrap.id]) {
+      _parallaxInstances[wrap.id].destroy();   // cancels RAF + removes listeners
+      delete _parallaxInstances[wrap.id];
+    }
     mediaEl.innerHTML = '';
     document.querySelectorAll(`#panel-${panel} .project-card`).forEach(c => c.classList.remove('selected'));
     currentOpen[panel] = null;
